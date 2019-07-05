@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fresh.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.fresh.bean.User">
+    <resultMap id="User" type="com.fresh.bean.User">
         <id column="uid" property="uid"/>
         <result column="account" property="account"/>
         <result column="nickname" property="sex"/>
         <result column="sex" property="sex"/>
+
+        <collection property="location"
+                    ofType="com.fresh.bean.Location"
+                    javaType="java.util.ArrayList">
+            <id column="lid" property="lid"/>
+            <result column="address" property="address"/>
+        </collection>
     </resultMap>
+
     <sql id="Base_Column_List">
     uid, account, nickname, sex
   </sql>
 
     <!-- 根据主键查询用户信息 -->
-    <select id="SelectUserByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="SelectUserByPrimaryKey" resultMap="User" parameterType="java.lang.Integer">
     select 
     account,nickname,sex
     from user
@@ -20,7 +28,7 @@
   </select>
 
   <!-- 根据账户查询用户信息 -->
-  <select id="SelectUserByAccount" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="SelectUserByAccount" resultMap="User" parameterType="java.lang.Integer">
     select
     *
     from user

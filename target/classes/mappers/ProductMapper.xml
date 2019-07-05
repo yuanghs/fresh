@@ -23,7 +23,7 @@
   </sql>
 
     <!-- 从数据库中随机查询出6条产品记录 -->
-    <select id="selectRandomProducts" resultMap="Product">
+    <select id="selectRandomProducts" resultType="com.fresh.bean.Product">
         select * from product order by rand() limit 6
   </select>
 

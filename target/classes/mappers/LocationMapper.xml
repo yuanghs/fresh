@@ -12,7 +12,7 @@
   </sql>
 
   <!-- 根据用户的uid查询出一个地址List -->
-  <select id="selectLocationsByUid" resultType="BaseResultMap" parameterType="com.fresh.bean.User" >
+  <select id="selectLocationsByUid" resultType="com.fresh.bean.Location" parameterType="com.fresh.bean.User" >
     select 
     lid, address
     from location

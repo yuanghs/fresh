@@ -1,101 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fresh.mappers.OrdersMapper" >
-  <resultMap id="BaseResultMap" type="com.fresh.bean.Orders" >
-    <constructor >
-      <idArg column="oid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="order_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="oprice" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
-      <arg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="lid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.fresh.mappers.OrdersMapper">
+
+    <resultMap id="BaseResultMap" type="com.fresh.bean.Orders">
+        <id column="oid" property="oid"/>
+
+        <result column="order_time" property="order_time"/>
+        <result column="oprice" property="oprice"/>
+
+        <association property="user"
+                     column="uid"
+                     javaType="com.fresh.bean.User">
+            <id column="uid" property="uid"/>
+        </association>
+
+        <association property="product"
+                     column="pid"
+                     javaType="com.fresh.bean.Product">
+            <id column="pid" property="com.fresh.bean.Product"/>
+        </association>
+
+        <collection property="orderItemList"
+                    ofType="com.fresh.bean.OrderItem"
+                    javaType="java.util.ArrayList">
+            <id column="iid" property="iid"/>
+
+            <result column="subtotal" property="subtotal"/>
+            <result column="count" property="count"/>
+
+            <association property="orders"
+                         column="oid"
+                         javaType="com.fresh.bean.Orders">
+                <id column="oid" property="oid"/>
+                <result column="oprice" property="oprice"/>
+            </association>
+
+            <association property="product"
+                         column="pid"
+                         javaType="com.fresh.bean.Product">
+                <id column="pid" property="com.fresh.bean.Product"/>
+                <result column="pname" property="pname"/>
+                <result column="price" property="price"/>
+                <result column="pinfo" property="pinfo"/>
+                <result column="plink" property="plink"/>
+            </association>
+        </collection>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
     oid, order_time, oprice, uid, lid
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from orders
-    where oid = #{oid,jdbcType=INTEGER}
-  </select>
+    <!-- 根据订单主键查出所有的订单详情-->
+    <select id="selectByOid" resultMap="BaseResultMap" parameterType="com.fresh.bean.Orders">
+        select
+        subtotal, count, pid
+        from orderitem
+        where oid = #{oid,jdbcType=INTEGER}
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!-- 根据用户主键查询出所有的订单 -->
+    <select id="selectByUid" resultType="com.fresh.bean.Orders" parameterType="com.fresh.bean.Orders">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where uid = #{user.uid}
+    </select>
+
+    <!-- 根据订单主键删除订单 -->
+    <delete id="deleteOrderByOid" parameterType="com.fresh.bean.Orders">
     delete from orders
     where oid = #{oid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="com.fresh.bean.Orders" >
-    insert into orders (oid, order_time, oprice, 
+    <!-- 生成订单：向orders表中添加一条记录 -->
+    <insert id="insertOrder" parameterType="com.fresh.bean.Orders">
+    insert into orders (order_time, oprice,
       uid, lid)
-    values (#{oid,jdbcType=INTEGER}, #{orderTime,jdbcType=TIMESTAMP}, #{oprice,jdbcType=DECIMAL}, 
+    values (#{orderTime,jdbcType=TIMESTAMP}, #{oprice,jdbcType=DECIMAL},
       #{uid,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER})
   </insert>
 
-  <insert id="insertSelective" parameterType="com.fresh.bean.Orders" >
-    insert into orders
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="oid != null" >
-        oid,
-      </if>
-      <if test="orderTime != null" >
-        order_time,
-      </if>
-      <if test="oprice != null" >
-        oprice,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="lid != null" >
-        lid,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="oid != null" >
-        #{oid,jdbcType=INTEGER},
-      </if>
-      <if test="orderTime != null" >
-        #{orderTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="oprice != null" >
-        #{oprice,jdbcType=DECIMAL},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="lid != null" >
-        #{lid,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <!-- 根据订单号删除订单详情 -->
+    <delete id="deleteOrderItemByOid" parameterType="com.fresh.bean.OrderItem">
+    delete from orderitem
+    where oid = #{orders.oid}
+  </delete>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.fresh.bean.Orders" >
-    update orders
-    <set >
-      <if test="orderTime != null" >
-        order_time = #{orderTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="oprice != null" >
-        oprice = #{oprice,jdbcType=DECIMAL},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="lid != null" >
-        lid = #{lid,jdbcType=INTEGER},
-      </if>
-    </set>
-    where oid = #{oid,jdbcType=INTEGER}
-  </update>
+    <!-- 插入订单详情 -->
+    <insert id="insertOrderItem" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into orderitem (subtotal, count, oid, pid) values
+        <foreach collection="list" item="item" index="index" separator="," close=";">
+            (#{item.subtotal}, #{item.count}, #{item.orders.oid}, #{item.product.pid})
+        </foreach>
+    </insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.fresh.bean.Orders" >
-    update orders
-    set order_time = #{orderTime,jdbcType=TIMESTAMP},
-      oprice = #{oprice,jdbcType=DECIMAL},
-      uid = #{uid,jdbcType=INTEGER},
-      lid = #{lid,jdbcType=INTEGER}
-    where oid = #{oid,jdbcType=INTEGER}
-  </update>
 </mapper>
