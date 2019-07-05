@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fresh.mappers.LocationMapper" >
+
+  <resultMap id="BaseResultMap" type="com.fresh.bean.Location" >
+    <id column="lid" property="lid"/>
+
+    <result column="address" property="address"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lid, address, uid
+  </sql>
+
+  <!-- 根据用户的uid查询出一个地址List -->
+  <select id="selectLocationsByUid" resultType="BaseResultMap" parameterType="com.fresh.bean.User" >
+    select 
+    lid, address
+    from location
+    where uid = #{user.uid}
+  </select>
+
+  <!--根据主键删除一条地址记录-->
+  <delete id="deleteByPrimaryKey" parameterType="com.fresh.bean.Location" >
+    delete from location
+    where lid = #{lid,jdbcType=INTEGER}
+  </delete>
+
+  <!--插入一条记录-->
+  <insert id="insertLocation" parameterType="com.fresh.bean.Location" >
+    insert into location (address, uid
+      )
+    values (#{address,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <!--根据主键修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.fresh.bean.Location" >
+    update location
+    set address = #{address,jdbcType=VARCHAR}
+    where lid = #{lid,jdbcType=INTEGER}
+  </update>
+</mapper>

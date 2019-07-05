@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fresh.mappers.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.fresh.bean.Orders" >
+    <constructor >
+      <idArg column="oid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="oprice" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="uid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="lid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oid, order_time, oprice, uid, lid
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orders
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.fresh.bean.Orders" >
+    insert into orders (oid, order_time, oprice, 
+      uid, lid)
+    values (#{oid,jdbcType=INTEGER}, #{orderTime,jdbcType=TIMESTAMP}, #{oprice,jdbcType=DECIMAL}, 
+      #{uid,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.fresh.bean.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="oprice != null" >
+        oprice,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="lid != null" >
+        lid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oprice != null" >
+        #{oprice,jdbcType=DECIMAL},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null" >
+        #{lid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.fresh.bean.Orders" >
+    update orders
+    <set >
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oprice != null" >
+        oprice = #{oprice,jdbcType=DECIMAL},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="lid != null" >
+        lid = #{lid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.fresh.bean.Orders" >
+    update orders
+    set order_time = #{orderTime,jdbcType=TIMESTAMP},
+      oprice = #{oprice,jdbcType=DECIMAL},
+      uid = #{uid,jdbcType=INTEGER},
+      lid = #{lid,jdbcType=INTEGER}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+</mapper>

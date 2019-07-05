@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
+
+		<!--延迟加载（lazyLoadingEnabled）：在用到时再加载
+			按需加载（aggressiveLazyLoading）
+		-->
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+
+		<!--开启二级缓存-->
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+
+	<!-- 起别名：为实体类起一个别名，便于在使用实体类全类名的时候替代，防止冗余 -->
+	<typeAliases>
+		<package name="com.fresh.bean"></package>
+	</typeAliases>
+
+
+	<!-- 将写好的sql映射文件配置到全局映射文件中
+	 -->
+	<mappers></mappers>
+</configuration>
