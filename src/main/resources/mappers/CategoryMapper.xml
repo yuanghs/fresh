@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fresh.mappers.CategoryMapper">
-    <resultMap id="Category" type="com.fresh.bean.Category">
+
+    <resultMap id="CategoryResultMap" type="com.fresh.bean.Category">
         <id column="cid" property="cid"/>
         <result column="cname" property="cname"/>
 
-        <collection property="product"
+        <collection property="productList"
+                    column="cid"
                     ofType="com.fresh.bean.Product"
-                    javaType="java.util.ArrayList">
-            <id column="pid" property="com.fresh.bean.Product"/>
-            <result column="pname" property="pname"/>
-            <result column="price" property="price"/>
-            <result column="pinfo" property="pinfo"/>
-            <result column="plink" property="plink"/>
-            <result column="inventory" property="inventory"/>
-        </collection>
+                    javaType="java.util.ArrayList"
+                    select="com.fresh.mappers.ProductMapper.selectProductsByCid"/>
+
     </resultMap>
     <sql id="Base_Column_List">
     cid, cname
   </sql>
 
     <!-- 根据分类主键查询分类 -->
-    <select id="selectByPrimaryKey" resultMap="com.fresh.bean.Category" parameterType="com.fresh.bean.Category">
+    <select id="selectByPrimaryKey"
+            resultMap="CategoryResultMap"
+            parameterType="com.fresh.bean.Category">
     select 
-    cname
+    *
     from category
-    where cid = #{category.cid}
+    where cid = #{cid,jdbcType=INTEGER}
   </select>
 
     <!-- 查询出所有的分类 -->
-    <select id="selectAllCategory" resultType="java.util.ArrayList">
+    <select id="selectAllCategory" resultMap="CategoryResultMap">
     select
     *
     from category
   </select>
 
-    <!-- 根据分类主键查询出所有的商品-->
-    <select id="selectProductsByCid" resultMap="Category" parameterType="com.fresh.bean.Product">
-        select * from product where cid = #{cid,jdbcType=INTEGER}
+    <resultMap id="CategoryResultMap2" type="com.fresh.bean.Category">
+        <id column="cid" property="cid"/>
+        <result column="cname" property="cname"/>
+    </resultMap>
+
+    <!-- 根据cid查询出分类 -->
+    <select id="selectCategoryByCid" resultMap="CategoryResultMap2" parameterType="com.fresh.bean.Category">
+    select
+    cid, cname
+    from category where cid = #{cid}
   </select>
 
 </mapper>

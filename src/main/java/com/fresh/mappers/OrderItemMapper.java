@@ -3,17 +3,30 @@ package com.fresh.mappers;
 import com.fresh.bean.OrderItem;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface OrderItemMapper {
-    int deleteByPrimaryKey(Integer iid);
 
-    int insert(OrderItem record);
+    /**
+     * 根据订单主键删除订单详情
+     * @param orderItem
+     * @return
+     */
+    int deleteOrderItemByOid(OrderItem orderItem);
 
-    int insertSelective(OrderItem record);
+    /**
+     * 插入订单详情
+     *      订单详情是一个list
+     * @param list
+     */
+    int insertOrderItem(List<OrderItem> list);
 
-    OrderItem selectByPrimaryKey(Integer iid);
+    /**
+     * 根据订单主键返回订单详情
+     * @param orderItem
+     * @return
+     */
+    List<OrderItem> selectOrderItemByOid(OrderItem orderItem);
 
-    int updateByPrimaryKeySelective(OrderItem record);
-
-    int updateByPrimaryKey(OrderItem record);
 }

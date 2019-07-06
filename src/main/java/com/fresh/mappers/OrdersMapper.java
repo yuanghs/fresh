@@ -34,17 +34,11 @@ public interface OrdersMapper {
     int insertOrder(Orders orders);
 
     /**
-     * 插入订单详情
-     * @param list
-     */
-    void insertOrderItem(List<OrderItem> list);
-
-    /**
      * 根据用户主键查询出所有的订单
      * @param orders
      * @return
      */
-    List<Orders> selectByUid(Orders orders);
+    List<Orders> selectOrdersByUid(Orders orders);
 
     /**
      * 根据订单主键查询出所有的订单详情
@@ -52,6 +46,12 @@ public interface OrdersMapper {
      * @return
      */
     Orders selectByOid(Orders orders);
+
+    /**
+     * 根据订单主键查询出所有的订单详情
+     * @return
+     */
+    int selectMaxOid();
 
 
 }

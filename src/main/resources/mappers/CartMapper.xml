@@ -2,35 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fresh.mappers.CartMapper">
 
-    <resultMap id="Cart" type="com.fresh.bean.Cart">
+    <resultMap id="BaseResultMap" type="com.fresh.bean.Cart">
         <id column="cid" property="cid"/>
         <result column="count" property="count"/>
+    </resultMap>
 
+    <resultMap id="ProductResultMap" type="com.fresh.bean.Cart" extends="BaseResultMap">
         <association property="product"
                      column="pid"
-                     javaType="com.fresh.bean.Product">
-            <id column="pid" property="com.fresh.bean.Product"/>
-            <result column="pname" property="pname"/>
-            <result column="price" property="price"/>
-            <result column="pinfo" property="pinfo"/>
-            <result column="plink" property="plink"/>
-            <result column="inventory" property="inventory"/>
-
-            <association property="category"
-                         column="cid"
-                         javaType="com.fresh.bean.Category">
-                <id column="cid" property="cid"/>
-                <result column="cname" property="cname"/>
-            </association>
+                     javaType="com.fresh.bean.Product" select="com.fresh.mappers.ProductMapper.selectProductByPrimaryKey">
+<!--            <id column="pid" property="pid"/>-->
         </association>
+    </resultMap>
 
+    <resultMap id="UserResultMap" type="com.fresh.bean.Cart" extends="BaseResultMap">
         <association property="user"
                      column="uid"
                      javaType="com.fresh.bean.User">
             <id column="uid" property="uid"/>
-            <result column="account" property="account"/>
-            <result column="nickname" property="sex"/>
-            <result column="sex" property="sex"/>
         </association>
     </resultMap>
 
@@ -38,15 +27,15 @@
     cid, count, pid, uid
   </sql>
 
-    <!-- 根据用户主键查询出某用户购物车中的所有商品 -->
-    <select id="selectByUid" resultMap="Cart" parameterType="com.fresh.bean.Cart">
+    <!-- 根据uid查询出商品 -->
+    <select id="selectProductByUid" resultMap="ProductResultMap" parameterType="com.fresh.bean.Cart">
         select
-        <include refid="Base_Column_List"/>
+        cid, count, pid
         from cart
         where uid = #{user.uid}
     </select>
 
-    <!-- 根据主键删除购物车中的项 -->
+    <!-- 根据主键cid删除购物车中的项 -->
     <delete id="deleteByPrimaryKey" parameterType="com.fresh.bean.Cart">
     delete from cart
     where cid = #{cid,jdbcType=INTEGER}
@@ -58,12 +47,13 @@
     where uid = #{user.uid}
   </delete>
 
+
     <!-- 添加购物车 -->
     <insert id="insertCart" parameterType="com.fresh.bean.Cart">
     insert into cart (count, pid,
       uid)
-    values (#{count,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER},
-      #{uid,jdbcType=INTEGER})
+    values (#{count,jdbcType=INTEGER}, #{product.pid},
+      #{user.uid})
   </insert>
 
     <!-- 根据商品主键修改购物车中商品的数量 -->

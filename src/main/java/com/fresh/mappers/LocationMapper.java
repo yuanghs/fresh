@@ -29,10 +29,17 @@ public interface LocationMapper {
     /**
      * 根据用户的id查询出用户的地址
      *              > 地址是一个List
-     * @param user
+     * @param location
      * @return
      */
-    List<Location> selectLocationsByUid(User user);
+    List<Location> selectLocationsByUid(Location location);
+
+    /**
+     * 根据主键查询地址
+     * @param location
+     * @return
+     */
+    Location selectByPrimaryKey(Location location);
 
     /**
      * 根据主键修改地址

@@ -1,5 +1,7 @@
 package com.fresh.bean;
 
+import java.util.List;
+
 /**
  * 购物车类
  *      > 映射为购物车表
@@ -8,11 +10,11 @@ package com.fresh.bean;
  * @date 2019/7/3
  */
 public class Cart {
-
     private Integer cid;            //主键
     private Integer count;          //商品件数
     private Product product;        //商品引用：主键
     private User user;              //用户引用：主键
+
 
     public Cart(Integer cid, Integer count, Product product, User user) {
         this.cid = cid;

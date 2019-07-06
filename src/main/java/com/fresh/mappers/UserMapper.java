@@ -1,6 +1,7 @@
 package com.fresh.mappers;
 
 import com.fresh.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -34,9 +35,12 @@ public interface UserMapper {
     int insertUser(User user);
 
 
+
+//    int updateSexByPrimaryKey(@Param("nickname") String nickname, @Param("sex") String sex, @Param("uid") Integer uid);
+
     /**
      * 根据用户主键修改用户的性别
-     * @param user
+     *  @param user
      */
-    int updateSexByPrimaryKey(User user);
+    int updateByPrimaryKey(User user);
 }

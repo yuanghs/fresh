@@ -26,9 +26,11 @@ public interface CategoryMapper {
     List<Category> selectAllCategory();
 
     /**
-     * 根据分类主键查询出对应分类下的商品
+     * 查询分类
      * @param category
      * @return
      */
-    Category selectProductsByCid(Category category);
+    Category selectCategoryByCid(Category category);
+
+
 }

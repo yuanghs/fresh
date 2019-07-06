@@ -3,6 +3,8 @@ package com.fresh.mappers;
 import com.fresh.bean.Cart;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 购车接口
  */
@@ -25,17 +27,18 @@ public interface CartMapper {
 
     /**
      * 把商品添加到购物车
+     *          > 传入：商品数量，pid，uid
      * @param cart
      * @return
      */
     int insertCart(Cart cart);
 
     /**
-     * 根据用户主键查询出某用户购物车中的所有商品
+     * 根据uid查询出pid
      * @param cart
      * @return
      */
-    Cart selectByUid(Cart cart);
+    List<Cart> selectProductByUid(Cart cart);
 
     /**
      * 根据商品主键修改购物车中商品的数量

@@ -4,15 +4,23 @@
 
   <resultMap id="BaseResultMap" type="com.fresh.bean.Location" >
     <id column="lid" property="lid"/>
-
     <result column="address" property="address"/>
   </resultMap>
   <sql id="Base_Column_List" >
     lid, address, uid
   </sql>
 
+  <!-- 根据主键查询地址 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.fresh.bean.Location" >
+    select
+    lid, address
+    from location
+    where lid = #{lid,jdbcType=INTEGER}
+  </select>
+
+
   <!-- 根据用户的uid查询出一个地址List -->
-  <select id="selectLocationsByUid" resultType="com.fresh.bean.Location" parameterType="com.fresh.bean.User" >
+  <select id="selectLocationsByUid" resultMap="BaseResultMap" parameterType="com.fresh.bean.Location" >
     select 
     lid, address
     from location
@@ -29,7 +37,7 @@
   <insert id="insertLocation" parameterType="com.fresh.bean.Location" >
     insert into location (address, uid
       )
-    values (#{address,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}
+    values (#{address,jdbcType=VARCHAR}, #{user.uid}
       )
   </insert>
 

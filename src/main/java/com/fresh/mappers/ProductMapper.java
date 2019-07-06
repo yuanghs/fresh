@@ -23,4 +23,20 @@ public interface ProductMapper {
      * @return
      */
     Product selectProductByPrimaryKey(Product product);
+
+    /**
+     * 根据分类主键查询出所有的商品
+     * @param product
+     * @return
+     */
+    List<Product> selectProductsByCid(Product product);
+
+    /**
+     * 根据分类主键查询出所有的商品
+     * @param product
+     * @return
+     */
+    List<Product> selectProductsByPname(Product product);
+
+
 }
