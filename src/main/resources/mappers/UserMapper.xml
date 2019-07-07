@@ -43,7 +43,7 @@
       )
   </insert>
 
-    <!-- 根据用户主键修改用户的性别 -->
+    <!-- 根据用户主键修改用户的性别和昵称 -->
     <update id="updateByPrimaryKey" parameterType="com.fresh.bean.User">
     update user
     set

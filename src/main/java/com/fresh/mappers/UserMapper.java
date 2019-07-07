@@ -39,7 +39,7 @@ public interface UserMapper {
 //    int updateSexByPrimaryKey(@Param("nickname") String nickname, @Param("sex") String sex, @Param("uid") Integer uid);
 
     /**
-     * 根据用户主键修改用户的性别
+     * 根据用户主键修改用户的性别和昵称
      *  @param user
      */
     int updateByPrimaryKey(User user);
