@@ -16,7 +16,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User SelectUserByPrimaryKey(User user);
+    User selectUserByPrimaryKey(User user);
 
     /**
      * 根据账户查询用户信息
@@ -24,7 +24,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User SelectUserByAccount(User user);
+    User selectUserByAccount(User user);
 
     /**
      * 插入一条记录：用户信息
@@ -39,7 +39,7 @@ public interface UserMapper {
 //    int updateSexByPrimaryKey(@Param("nickname") String nickname, @Param("sex") String sex, @Param("uid") Integer uid);
 
     /**
-     * 根据用户主键修改用户的性别
+     * 根据用户主键修改用户的性别和昵称
      *  @param user
      */
     int updateByPrimaryKey(User user);

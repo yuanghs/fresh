@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.fresh.bean.User">
         <id column="uid" property="uid"/>
         <result column="account" property="account"/>
-        <result column="nickname" property="sex"/>
+        <result column="nickname" property="nickname"/>
         <result column="sex" property="sex"/>
     </resultMap>
 
@@ -21,7 +21,7 @@
   </sql>
 
     <!-- 根据主键查询用户信息 -->
-    <select id="SelectUserByPrimaryKey" resultMap="UserResultMap" parameterType="com.fresh.bean.User">
+    <select id="selectUserByPrimaryKey" resultMap="UserResultMap" parameterType="com.fresh.bean.User">
     select 
     *
     from user
@@ -29,7 +29,7 @@
   </select>
 
     <!-- 根据账户查询用户信息 -->
-    <select id="SelectUserByAccount" resultMap="UserResultMap" parameterType="com.fresh.bean.User">
+    <select id="selectUserByAccount" resultMap="UserResultMap" parameterType="com.fresh.bean.User">
     select
     *
     from user
@@ -43,7 +43,7 @@
       )
   </insert>
 
-    <!-- 根据用户主键修改用户的性别 -->
+    <!-- 根据用户主键修改用户的性别和昵称 -->
     <update id="updateByPrimaryKey" parameterType="com.fresh.bean.User">
     update user
     set

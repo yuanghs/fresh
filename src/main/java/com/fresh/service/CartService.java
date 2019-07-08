@@ -7,7 +7,13 @@ import com.fresh.vo.CartVO;
 import java.util.List;
 
 /**
+<<<<<<< HEAD
+ *
+ *
+ * @author ygh
+=======
  * @author sdy
+>>>>>>> master
  * @date 2019/7/3
  */
 

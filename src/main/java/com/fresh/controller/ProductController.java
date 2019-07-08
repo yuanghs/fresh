@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.List;
 
 /**
@@ -21,6 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+
+
     @Autowired
     private ProductService productService;
 
@@ -96,5 +97,4 @@ public class ProductController {
         }
         return jsonObject;
     }
-
 }
