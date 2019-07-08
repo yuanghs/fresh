@@ -42,12 +42,12 @@ public class ProductDao {
     @Test
     public void test2() {
 
-        Category category= new Category();
-        category.setCid(4);
+//        Category category= new Category();
+//        category.setCid(4);
 
         Product product = new Product();
         product.setPid(2);
-        product.setCategory(category);
+//        product.setCategory(category);
 
         Product product1 = productMapper.selectProductByPrimaryKey(product);
 
