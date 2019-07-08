@@ -57,9 +57,9 @@
   </insert>
 
     <!-- 根据商品主键修改购物车中商品的数量 -->
-    <update id="updateCountByPid" parameterType="com.fresh.bean.Cart">
+    <update id="updateCountByPidAndUid" parameterType="com.fresh.bean.Cart">
     update cart
     set count = #{count,jdbcType=INTEGER}
-    where pid = #{product.pid}
+    where pid = #{product.pid} and uid = #{user.uid}
   </update>
 </mapper>
