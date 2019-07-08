@@ -45,5 +45,5 @@ public interface CartMapper {
      * @param cart
      * @return
      */
-    int updateCountByPid(Cart cart);
+    int updateCountByPidAndUid(Cart cart);
 }

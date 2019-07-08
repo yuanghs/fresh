@@ -113,19 +113,19 @@ public class JwtNut {
         //issuer:作者名（可修改）；secret: 用户签名（可修改）
         nut.init("heeeyou", "chestnut&youyinnn");
         //设置token中的参数
-        nut.setClaim("id", "id");
-        nut.setClaim("per", "account");
+        nut.setClaim("uid", "1");
+//        nut.setClaim("per", "account");
         String token = nut.getToken();
         System.out.println(token);
 
         //获取token中携带的信息
         //获取所有信息HashMap<String, String>
-        HashMap messMap = getMessMap("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ" +
-                "oZWVleW91IiwiaWQiOiJpZCIsInBlciI6ImFjY291bnQifQ.qdCYEOEfl9nWmEKxiU7CIDd4_14ZTJX4khGrurG5VYg");
+        HashMap messMap = getMessMap("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiaXNzIjo" +
+                "iaGVlZXlvdSJ9.0EuiVxuIPftpalL7Y0KfW2hp_SfWRe0otFZfFB3GPjY");
         System.out.println(messMap);
         //通过键获取某一个值
-        System.out.println(getMes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJoZWVleW91IiwiaWQiOi" +
-                "JpZCIsInBlciI6ImFjY291bnQifQ.qdCYEOEfl9nWmEKxiU7CIDd4_14ZTJX4khGrurG5VYg", "id"));
+        System.out.println(getMes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiaXNzIjo" +
+                "iaGVlZXlvdSJ9.0EuiVxuIPftpalL7Y0KfW2hp_SfWRe0otFZfFB3GPjY", "uid"));
     }
 
 }

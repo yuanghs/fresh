@@ -19,11 +19,18 @@ public interface ProductService {
     List<ProductVO> random();
 
     /**
-     * 根据id获取商品详情信息
+     * 根据pid获取商品详情信息VO
      * @param product pid
      * @return Product
      */
-    ProductDetailVO getById(Product product);
+    ProductDetailVO getVoById(Product product);
+
+    /**
+     * 根据pid获取Product对象
+     * @param product
+     * @return
+     */
+    Product getProductById(Product product);
 
     /**
      * 通过分类获取商品列表

@@ -50,12 +50,17 @@ public class ProductServiceImple implements ProductService {
      * @return
      */
     @Override
-    public ProductDetailVO getById(Product product) {
+    public ProductDetailVO getVoById(Product product) {
         Product pro = productMapper.selectProductByPrimaryKey(product);
         ProductDetailVO detailVO = new ProductDetailVO(pro.getPid(), pro.getPname(), pro.getPrice(),
                 pro.getPinfo(), pro.getPlink(), pro.getInventory(), pro.getCategory().getCid(),
                 pro.getCategory().getCname());
         return detailVO;
+    }
+
+    @Override
+    public Product getProductById(Product product) {
+        return productMapper.selectProductByPrimaryKey(product);
     }
 
     /**

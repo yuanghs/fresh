@@ -1,6 +1,7 @@
 package com.fresh.service;
 
 import com.fresh.bean.Cart;
+import com.fresh.bean.Product;
 import com.fresh.vo.CartVO;
 
 import java.util.List;

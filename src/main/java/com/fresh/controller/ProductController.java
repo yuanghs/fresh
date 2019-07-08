@@ -51,7 +51,7 @@ public class ProductController {
     @RequestMapping(value = "/getById")
     @ResponseBody
     public JSONObject getById (@RequestBody Product product) {
-        ProductDetailVO byId = productService.getById(product);
+        ProductDetailVO byId = productService.getVoById(product);
         if (byId != null) {
             jsonObject.put("list", byId);
             jsonObject.put("code", "S000");

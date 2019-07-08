@@ -58,7 +58,7 @@ public class CartServiceImple implements CartService {
      */
     @Override
     public int updateCart(Cart cart) {
-        return cartMapper.updateCountByPid(cart);
+        return cartMapper.updateCountByPidAndUid(cart);
     }
 
     /**
