@@ -15,6 +15,9 @@ public class User {
     private String account;     //登录账户：电话号码
     private String nickname;    //用户的昵称
     private String sex;         //性别
+    private String token;       //接收token串
+    private String verifyCode;        //接收验证码
+
 
     //保存用户地址的list，用户和地址的关系为：1——m
     private List<Location> addressList;
@@ -28,6 +31,22 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<Location> getAddressList() {

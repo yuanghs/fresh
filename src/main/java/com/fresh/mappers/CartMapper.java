@@ -41,9 +41,9 @@ public interface CartMapper {
     List<Cart> selectProductByUid(Cart cart);
 
     /**
-     * 根据商品主键修改购物车中商品的数量
+     * 根据商品主键和用户主键修改购物车中商品的数量
      * @param cart
      * @return
      */
-    int updateCountByPid(Cart cart);
+    int updateCountByPidAndUid(Cart cart);
 }

@@ -99,7 +99,7 @@ public class CartDao {
     }
 
     /**
-     * 测试 updateCountByPid()
+     * 测试 updateCountByPidAndUid()
      *            > 成功！
      */
     @Test
@@ -112,7 +112,7 @@ public class CartDao {
         cart.setCount(25);
         cart.setProduct(product);
 
-        int a = cartMapper.updateCountByPid(cart);
+        int a = cartMapper.updateCountByPidAndUid(cart);
 
         System.out.println(a);
     }

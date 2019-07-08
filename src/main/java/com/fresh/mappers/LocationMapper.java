@@ -20,7 +20,7 @@ public interface LocationMapper {
 
     /**
      * 添加一条地址记录
-     *         > 插入：用户的地址，用的uid
+     *         > 插入：用户的地址，用户的uid
      * @param location
      * @return
      */

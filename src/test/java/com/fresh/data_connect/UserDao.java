@@ -28,9 +28,9 @@ public class UserDao {
 
         User user = new User();
 
-        user.setUid(7);
+        user.setUid(8);
 
-        User user1 = userMapper.SelectUserByPrimaryKey(user);
+        User user1 = userMapper.selectUserByPrimaryKey(user);
 
         System.out.println(user1);
     }
@@ -44,11 +44,11 @@ public class UserDao {
 
         User user = new User();
 
-        user.setUid(2);
+//        user.setUid(2);
 
-        user.setAccount("18627707436");
+        user.setAccount("15827088983");
 
-        User user1 = userMapper.SelectUserByAccount(user);
+        User user1 = userMapper.selectUserByAccount(user);
 
         System.out.println(user1);
     }

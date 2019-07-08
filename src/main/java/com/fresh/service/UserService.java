@@ -2,6 +2,10 @@ package com.fresh.service;
 
 import com.fresh.bean.Location;
 import com.fresh.bean.User;
+import com.fresh.vo.LocationVO;
+import com.fresh.vo.UserVO;
+
+import java.util.List;
 
 
 /**
@@ -15,28 +19,36 @@ public interface UserService {
      *
      * @param user
      * @return
-     *      0：未插入数据
-     *      1：插入数据成功
      */
-    int login(User user);
+    String login(User user);
 
     /**
-     * 修改用户的地址
+     * 获取收集验证码
      * @param user
-     * @param location
      * @return
-     *      0：修改失败
-     *      1：修改成功
      */
-   int updateLocation(User user, Location location);
+    String getVerifyCode(User user);
 
     /**
-     * 修改用户的基本信息
+     * 添加地址
+     * @param address
+     * @return
+     */
+    public String addLocation(String token, String address);
+
+    /**
+     * 获取用户地址列表
      * @param user
      * @return
-     *      0：修改失败
-     *      1：修改成功
      */
-   int updateInformation(User user);
+    List<LocationVO> getUserLocationList(User user);
+
+
+    /**
+     * 获取用户信息
+     * @param user
+     * @return
+     */
+  UserVO getUserInformation(User user);
 
 }

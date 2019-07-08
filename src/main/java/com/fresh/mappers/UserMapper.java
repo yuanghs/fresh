@@ -16,7 +16,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User SelectUserByPrimaryKey(User user);
+    User selectUserByPrimaryKey(User user);
 
     /**
      * 根据账户查询用户信息
@@ -24,7 +24,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User SelectUserByAccount(User user);
+    User selectUserByAccount(User user);
 
     /**
      * 插入一条记录：用户信息
