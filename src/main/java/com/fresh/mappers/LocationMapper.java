@@ -1,7 +1,6 @@
 package com.fresh.mappers;
 
 import com.fresh.bean.Location;
-import com.fresh.bean.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

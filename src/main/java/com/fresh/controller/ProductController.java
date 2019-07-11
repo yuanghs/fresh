@@ -25,8 +25,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    private JSONObject jsonObject = new JSONObject();
-
     /**
      * 主页随机查询6条商品记录
      * @return
@@ -34,6 +32,7 @@ public class ProductController {
     @RequestMapping(value = "/mainList")
     @ResponseBody
     public JSONObject mainList () {
+        JSONObject jsonObject = new JSONObject();
         List<ProductVO> random = productService.random();
         if (random != null) {
             jsonObject.put("list", random);
@@ -52,6 +51,7 @@ public class ProductController {
     @RequestMapping(value = "/getById")
     @ResponseBody
     public JSONObject getById (@RequestBody Product product) {
+        JSONObject jsonObject = new JSONObject();
         ProductDetailVO byId = productService.getVoById(product);
         if (byId != null) {
             jsonObject.put("list", byId);
@@ -70,6 +70,7 @@ public class ProductController {
     @RequestMapping("/sortList")
     @ResponseBody
     public JSONObject sortList(@RequestBody Category category) {
+        JSONObject jsonObject = new JSONObject();
         List<ProductVO> byKind = productService.getByKind(category);
         if (byKind != null) {
             jsonObject.put("list", byKind);
@@ -88,6 +89,7 @@ public class ProductController {
     @RequestMapping("/searchList")
     @ResponseBody
     public JSONObject searchList(@RequestBody Product product) {
+        JSONObject jsonObject = new JSONObject();
         List<ProductVO> search = productService.search(product);
         if (search != null) {
             jsonObject.put("list", search);

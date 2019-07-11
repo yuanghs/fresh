@@ -1,6 +1,5 @@
 package com.fresh.mappers;
 
-import com.fresh.bean.OrderItem;
 import com.fresh.bean.Orders;
 import org.springframework.stereotype.Repository;
 

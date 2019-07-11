@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -38,7 +40,6 @@ public class UserServiceImple implements UserService {
     public String login(User user) {
         // 随机生成也一个昵称
         String nickname = PetName.create();
-        System.out.println(nickname);
         user.setNickname(nickname);
         user.setSex("女");
 
@@ -56,7 +57,7 @@ public class UserServiceImple implements UserService {
                 jwtNut.setClaim("uid", userData.getUid().toString());
                 // 生成token
                 String token = jwtNut.getToken();
-                System.out.println(token);
+
                 return "P000" + token;      // 成功！
             } else {
                 return "P001";              // 失败！
@@ -68,7 +69,7 @@ public class UserServiceImple implements UserService {
             jwtNut.setClaim("uid", userData.getUid().toString());
             // 生成token
             String token = jwtNut.getToken();
-            System.out.println(token);
+
             return "P000" + token;          // 成功！
         }
     }
@@ -118,12 +119,14 @@ public class UserServiceImple implements UserService {
     }
 
     /**
-     * 获取用户的详细信息
+     * 获取用户的地址信息
      * @param user
      * @return
      */
     @Override
-    public List<LocationVO> getUserLocationList(User user) {
+    public Map<Integer, Object> getUserLocationList(User user) {
+        Map<Integer, Object> map = new HashMap<>();
+
         // 解析token中的用户uid
         String uidString = JwtNut.getMes(user.getToken(), "uid");
         // 转为Inter
@@ -141,22 +144,26 @@ public class UserServiceImple implements UserService {
         // 得到用户的地址列表
         List<Location> listLocation = userData.getAddressList();
 
-        System.out.println(listLocation);
-
-        // 新建 listLocation.size() 个UserVo对象
-        for (int i = 0; i < listLocation.size(); i++) {
-            listVo.add(new LocationVO());
-        }
-
-        // 循环填充listVo
-        for (int i = 0; i < listLocation.size(); i++) {
-            listVo.get(i).setLid(listLocation.get(i).getLid());
-            listVo.get(i).setAddress(listLocation.get(i).getAddress());
-            listVo.get(i).setNickname(userData.getNickname());
-            listVo.get(i).setPhone(userData.getAccount());
+        // 用户地址列表为空，需要添加地址
+        // 非空才可查出地址列表
+        if (listLocation.size() != 0) {
+            // 新建 listLocation.size() 个UserVo对象
+            for (int i = 0; i < listLocation.size(); i++) {
+                listVo.add(new LocationVO());
+            }
+            // 循环填充listVo
+            for (int i = 0; i < listLocation.size(); i++) {
+                listVo.get(i).setLid(listLocation.get(i).getLid());
+                listVo.get(i).setAddress(listLocation.get(i).getAddress());
+                listVo.get(i).setNickname(userData.getNickname());
+                listVo.get(i).setPhone(userData.getAccount());
+            }
+            map.put(0, listVo);
+        } else {
+            map.put(0, "P001");
         }
         // 返回地址列表
-        return listVo;
+        return map;
     }
 
     /**
@@ -176,8 +183,6 @@ public class UserServiceImple implements UserService {
 
         // 通过uid查询出用户的信息
         User userData = userMapper.selectUserByPrimaryKey(user1);
-
-        System.out.println(userData);
 
         // 封装到 UserVO
         UserVO userVO = new UserVO();

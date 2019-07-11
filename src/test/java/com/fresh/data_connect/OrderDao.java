@@ -125,6 +125,33 @@ public class OrderDao {
 
 
     }
+    /**
+     * 测试 insertOrder()
+     *             > 成功！
+     */
+    @Test
+    public void test4() {
+
+        User user = new User();
+        user.setUid(1);
+
+        Location location = new Location();
+        location.setLid(2);
+
+        // 把订单插入到订单表
+        Orders orders = new Orders();
+        orders.setUser(user);
+        orders.setLocation(location);
+        orders.setOprice(456.8);
+        orders.setOrder_time(new Date());
+
+
+        int a = ordersMapper.insertOrder(orders);
+
+
+        System.out.println(a);
+
+    }
 
     /**
      * 测试 selectMaxOid()

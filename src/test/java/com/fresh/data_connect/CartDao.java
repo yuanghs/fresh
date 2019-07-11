@@ -121,6 +121,24 @@ public class CartDao {
         System.out.println(a);
     }
 
+    /**
+     * 测试 deleteAllProductsByUid()
+     *            > 成功！
+     */
+    @Test
+    public void test6() {
+
+        User user = new User();
+        user.setUid(3);
+
+        Cart cart = new Cart();
+        cart.setUser(user);
+
+        int a = cartMapper.deleteAllProductsByUid(cart);
+
+        System.out.println(a);
+    }
+
 
 
 

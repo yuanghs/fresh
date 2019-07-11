@@ -9,14 +9,16 @@
     </resultMap>
 
     <resultMap id="OrderResultMap" type="com.fresh.bean.Orders" extends="BaseResultMap">
-        <association property="user"
-                     column="uid"
-                     javaType="com.fresh.bean.User" select="com.fresh.mappers.UserMapper.SelectUserByPrimaryKey">
-        </association>
+<!--        <association property="user"-->
+<!--                     column="uid"-->
+<!--                     javaType="com.fresh.bean.User"-->
+<!--                     select="com.fresh.mappers.UserMapper.SelectUserByPrimaryKey">-->
+<!--        </association>-->
 
         <association property="location"
                      column="lid"
-                     javaType="com.fresh.bean.Location" select="com.fresh.mappers.LocationMapper.selectByPrimaryKey">
+                     javaType="com.fresh.bean.Location"
+                     select="com.fresh.mappers.LocationMapper.selectByPrimaryKey">
         </association>
 
         <collection property="orderItemList"

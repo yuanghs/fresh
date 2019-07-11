@@ -28,7 +28,7 @@ public class UserDao {
 
         User user = new User();
 
-        user.setUid(8);
+        user.setUid(1);
 
         User user1 = userMapper.selectUserByPrimaryKey(user);
 

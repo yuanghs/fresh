@@ -1,11 +1,9 @@
 package com.fresh.service;
 
-import com.fresh.bean.Location;
 import com.fresh.bean.User;
-import com.fresh.vo.LocationVO;
 import com.fresh.vo.UserVO;
 
-import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -41,7 +39,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    List<LocationVO> getUserLocationList(User user);
+    Map<Integer, Object> getUserLocationList(User user);
 
 
     /**

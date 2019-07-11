@@ -1,16 +1,15 @@
 package com.fresh.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fresh.bean.Location;
 import com.fresh.bean.User;
 import com.fresh.service.UserService;
-import com.fresh.vo.LocationVO;
 import com.fresh.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ygh
@@ -113,10 +112,16 @@ public class UserController {
     public JSONObject addressList(@RequestBody User user) {
         JSONObject jsonObject = new JSONObject();
 
-        List<LocationVO> locationVOList = userService.getUserLocationList(user);
+        Map<Integer, Object> map = new HashMap<>();
 
-        jsonObject.put("locationList", locationVOList);
+        map = userService.getUserLocationList(user);
 
-        return jsonObject;
+        if (map.get(0).equals("P001")) {
+            jsonObject.put("code", "P001");
+            return jsonObject;
+        } else {
+            jsonObject.put("locationList", map.get(0));
+            return jsonObject;
+        }
     }
 }

@@ -33,8 +33,8 @@ public class ProductServiceImple implements ProductService {
     public List<ProductVO> random() {
         List<Product> products = productMapper.selectRandomProducts();
         List<ProductVO> pList = new LinkedList<>();
-        ProductVO product = new ProductVO();
         for (Product p : products) {
+            ProductVO product = new ProductVO();
             product.setPid(p.getPid());
             product.setPname(p.getPname());
             product.setPrice(p.getPrice());
@@ -71,7 +71,6 @@ public class ProductServiceImple implements ProductService {
     @Override
     public List<ProductVO> getByKind(Category category) {
         List<Category> categories = categoryMapper.selectAllCategory();
-        ProductVO productVO = new ProductVO();
         List<Product> productList = new LinkedList<>();
         for (Category cat: categories) {
             if (category.getCid().equals(cat.getCid())) {
@@ -80,7 +79,14 @@ public class ProductServiceImple implements ProductService {
             }
         }
         List<ProductVO> productVOS = new LinkedList<>();
-        setVO(productList, productVOS, productVO);
+        for (Product pro: productList) {
+            ProductVO productVO = new ProductVO();
+            productVO.setPid(pro.getPid());
+            productVO.setPlink(pro.getPlink());
+            productVO.setPname(pro.getPname());
+            productVO.setPrice(pro.getPrice());
+            productVOS.add(productVO);
+        }
         return productVOS;
     }
 
@@ -93,25 +99,15 @@ public class ProductServiceImple implements ProductService {
     public List<ProductVO> search(Product product) {
         List<Product> productList = productMapper.selectProductsByPname(product);
         List<ProductVO> productVOS = new LinkedList<>();
-        ProductVO productVO = new ProductVO();
-        setVO(productList, productVOS, productVO);
-        return productVOS;
-    }
-
-    /**
-     * Product类和ProductVO转换的通用方法
-     * @param productList
-     * @param productVOS
-     * @param productVO
-     */
-    private void setVO(List<Product> productList, List<ProductVO> productVOS, ProductVO productVO) {
         for (Product pro: productList) {
+            ProductVO productVO = new ProductVO();
             productVO.setPid(pro.getPid());
             productVO.setPlink(pro.getPlink());
             productVO.setPname(pro.getPname());
             productVO.setPrice(pro.getPrice());
             productVOS.add(productVO);
         }
+        return productVOS;
     }
 
 }

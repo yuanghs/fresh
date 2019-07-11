@@ -1,7 +1,6 @@
 package com.fresh.mappers;
 
 import com.fresh.bean.User;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**

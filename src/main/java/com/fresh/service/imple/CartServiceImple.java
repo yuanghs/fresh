@@ -27,9 +27,9 @@ public class CartServiceImple implements CartService {
     @Override
     public List<CartVO> getByUid(Cart cart) {
         List<Cart> carts = cartMapper.selectProductByUid(cart);
-        CartVO cartVO = new CartVO();
         List<CartVO> cartVOS = new LinkedList<>();
         for (Cart c : carts) {
+            CartVO cartVO = new CartVO();
             cartVO.setCid(c.getCid());
             cartVO.setCount(c.getCount());
             cartVO.setPid(c.getProduct().getPid());
