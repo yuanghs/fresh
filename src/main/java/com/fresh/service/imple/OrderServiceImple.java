@@ -203,6 +203,7 @@ public class OrderServiceImple implements OrderService {
                     orderItemVO.setSubtotal(subtotal);
                     orderItemVO.setPname(product.getPname());
                     orderItemVO.setPlink(product.getPlink());
+                    orderItemVO.setPid(orderItem1.getProduct().getPid());
                     // 填充到orderItemVOList
                     orderItemVOList.add(orderItemVO);
                 }

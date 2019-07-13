@@ -162,9 +162,9 @@ public class OrderDao {
     @Test
     public void test3() {
 
-        int a = ordersMapper.selectMaxOid();
+//        int a = ordersMapper.selectMaxOid();
 
-        System.out.println(a);
+//        System.out.println(a);
     }
 
 }

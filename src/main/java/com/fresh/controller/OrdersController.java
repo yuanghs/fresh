@@ -56,9 +56,9 @@ public class OrdersController {
 
         Map<Integer, Object> map = orderService.getOrderItem(user);
 
-        if (map.get(0).equals("P000")) {
-            // 返回P000，说明该用户还没有订单
-            jsonObject.put("code", "P000");
+        if (map.get(0).equals("S000")) {
+            // 返回S000，说明该用户还没有订单
+            jsonObject.put("code", "S000");
         } else {
             jsonObject.put("list", map.get(0));
         }
