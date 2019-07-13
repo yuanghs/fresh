@@ -46,11 +46,10 @@ public interface OrdersMapper {
      */
     Orders selectByOid(Orders orders);
 
-    /**
-     * 根据订单主键查询出所有的订单详情
-     * @return
-     */
-    int selectMaxOid();
-
+//    /**
+//     * 根据订单主键查询出所有的订单详情
+//     * @return
+//     */
+//    int selectMaxOid();
 
 }

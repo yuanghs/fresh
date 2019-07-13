@@ -42,21 +42,21 @@
         where uid = #{user.uid}
     </select>
 
-    <select id="selectMaxOid" resultType="java.lang.Integer" parameterType="com.fresh.bean.Orders">
-        select max(oid) oid from orders;
-    </select>
+<!--    <select id="selectMaxOid" resultType="java.lang.Integer" parameterType="com.fresh.bean.Orders">-->
+<!--        select max(oid) oid from orders;-->
+<!--    </select>-->
 
     <!-- 根据订单主键删除订单 -->
     <delete id="deleteOrderByOid" parameterType="com.fresh.bean.Orders">
     delete from orders
-    where oid = #{oid,jdbcType=INTEGER}
+    where oid = #{oid}
   </delete>
 
     <!-- 生成订单：向orders表中添加一条记录 -->
     <insert id="insertOrder" parameterType="com.fresh.bean.Orders">
     insert into orders (oid, order_time, oprice,
       uid, lid)
-    values (#{oid,jdbcType=INTEGER}, #{order_time,jdbcType=TIMESTAMP}, #{oprice,jdbcType=DECIMAL},
+    values (#{oid}, #{order_time,jdbcType=TIMESTAMP}, #{oprice,jdbcType=DECIMAL},
       #{user.uid}, #{location.lid})
   </insert>
 

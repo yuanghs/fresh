@@ -1,15 +1,13 @@
 package com.fresh.service.imple;
 
 import com.fresh.bean.*;
-import com.fresh.mappers.CartMapper;
-import com.fresh.mappers.OrderItemMapper;
-import com.fresh.mappers.OrdersMapper;
-import com.fresh.mappers.ProductMapper;
+import com.fresh.mappers.*;
 import com.fresh.service.OrderService;
 import com.fresh.util.JwtNut;
+import com.fresh.util.OrderUtil;
 import com.fresh.vo.OrderItemVO;
+import com.fresh.vo.OrderVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,6 +30,12 @@ public class OrderServiceImple implements OrderService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private LocationMapper locationMapper;
 
     /**
      * 插入订单
@@ -77,17 +81,19 @@ public class OrderServiceImple implements OrderService {
             // 加入到OrderItemList
             orderItemList.add(orderItem);
         }
+        // 把lid封装到Location中
+        Location location = new Location();
+        location.setLid(lid);
 
-        // 得到Oid
-        Integer oid = ordersMapper.selectMaxOid() + 1;
-
-        // 使用Order封装
+        // 定义一个订单对象，用于封装订单信息
         Orders orders = new Orders();
-        orders.setOid(oid);
+        orders.setOid(OrderUtil.getOrderNumber(new Date()));
+        orders.setOrder_time(new Date());
+        orders.setUser(user1);
+        orders.setLocation(location);
 
         // 定义Oprice
         Double oprice = 0d;
-
         // 遍历 OrderItemList
         // 1.得到订单总价：加入到订单表中
         // 2.在订单条目中设置订单号
@@ -95,25 +101,32 @@ public class OrderServiceImple implements OrderService {
             oprice += orderItem1.getSubtotal();
             orderItem1.setOrders(orders);
         }
-
-        // 把lid封装到Location中
-        Location location = new Location();
-        location.setLid(lid);
-
-        // 定义一个订单对象，用于封装订单信息
-        Orders orders1 = new Orders();
-        orders1.setOid(oid);
-        orders1.setOprice(oprice);
-        orders1.setOrder_time(new Date());
-        orders1.setUser(user1);
-        orders1.setLocation(location);
+        // 封装订单总价
+        orders.setOprice(oprice);
 
         // 将订单插入订单表
-        int i = ordersMapper.insertOrder(orders1);
+        int i = ordersMapper.insertOrder(orders);
         int k = orderItemMapper.insertOrderItem(orderItemList);
 
         // 插入成功，删除购物车
         if (i !=0 && k != 0) {
+            // 遍历购物车：修改库存
+            // 1. 得到商品的pid
+            // 2. 得到商品的数量
+            // 3. 修改商品表中的对应商品的库存
+            for (Cart cart2 : cartList) {
+                Product product = new Product();
+                // 得到商品pid
+                Integer pid = cart2.getProduct().getPid();
+                // 得到商品数量
+                Integer count = cart2.getCount();
+                // 封装
+                product.setInventory(count);
+                product.setPid(pid);
+                // 修改库存
+                productMapper.updateInventoryByPrimaryKey(product);
+            }
+            // 清空购物车
             cartMapper.deleteAllProductsByUid(cart);
             return "S000";
         } else {
@@ -122,18 +135,13 @@ public class OrderServiceImple implements OrderService {
     }
 
     /**
-     * 得到订单条目
+     * 得到用户所有的订单及对应订单下的订单条目
      *
      * @param user
      * @return
      */
     @Override
     public Map<Integer, Object> getOrderItem(User user) {
-
-        Map<Integer, Object> map = new HashMap<>();
-
-        List<OrderItemVO> orderItemVOList = new ArrayList<>();
-
         // 解析token中的用户uid
         String uidString = JwtNut.getMes(user.getToken(), "uid");
         // 转为Inter
@@ -146,18 +154,41 @@ public class OrderServiceImple implements OrderService {
         Orders orders = new Orders();
         orders.setUser(user1);
 
+        Map<Integer, Object> map = new HashMap<>();
+
+        // 封装orderVO的list
+        List<OrderVO> orderVOList = new ArrayList<>();
+
         // 通过uid查询出所有的订单
         List<Orders> ordersList = ordersMapper.selectOrdersByUid(orders);
 
         // 非空进入
         if (ordersList.size() != 0) {
-            // 遍历ordersList，得到所有的订单号，每个订单下对应的订单条目
+            // 遍历ordersList，得到所有的订单号，同时得到每个订单下对应的订单条目
             for(Orders orders1 : ordersList){
+                // 新建一个OrderVO对象用来封装信息
+                OrderVO orderVO = new OrderVO();
+                // 设置订单号
+                orderVO.setOid(orders1.getOid());
+                // 设置交易时间
+                orderVO.setDate(OrderUtil.getOrderTime(orders1.getOrder_time()));
+                // 设置订单价格
+                orderVO.setOprice(orders1.getOprice());
+                // 设置收件人姓名
+                String userName = userMapper.selectUserByPrimaryKey(user1).getNickname();
+                orderVO.setUserName(userName);
+                // 设置收件人地址
+                String address = locationMapper.selectByPrimaryKey(orders1.getLocation()).getAddress();
+                orderVO.setAddress(address);
+
                 // 使用OrderItem封装
                 OrderItem orderItem = new OrderItem();
                 orderItem.setOrders(orders1);
                 // 通过订单号查询出订单条目
                 List<OrderItem> orderItemList = orderItemMapper.selectOrderItemByOid(orderItem);
+
+                // 用于封装OrderItemVO的list
+                List<OrderItemVO> orderItemVOList = new ArrayList<>();
 
                 // 遍历orderItemList
                 // 1. 得到subtotal
@@ -175,10 +206,14 @@ public class OrderServiceImple implements OrderService {
                     // 填充到orderItemVOList
                     orderItemVOList.add(orderItemVO);
                 }
+                // 将orderItemVOList封装到OrderVO中
+                orderVO.setOrderItemVOList(orderItemVOList);
+                // 封装到 orderVOList 中
+                orderVOList.add(orderVO);
             }
-            map.put(0, orderItemVOList);
+            map.put(0, orderVOList);
         } else {
-            map.put(0, "S000");
+            map.put(0, "S000");     // 订单为空
         }
         return map;
     }

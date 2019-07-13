@@ -26,7 +26,7 @@ public class ProductController {
     private ProductService productService;
 
     /**
-     * 主页随机查询6条商品记录
+     * 主页随机查询10条商品记录
      * @return
      */
     @RequestMapping(value = "/mainList")

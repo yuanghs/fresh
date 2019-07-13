@@ -25,9 +25,9 @@
         select * from product where pname like "%"#{pname}"%"
   </select>
 
-    <!-- 从数据库中随机查询出6条产品记录 -->
+    <!-- 从数据库中随机查询出10条产品记录 -->
     <select id="selectRandomProducts" resultMap="ProductMap">
-        select * from product order by rand() limit 6
+        select * from product order by rand() limit 10
   </select>
 
     <!-- 根据主键查询商品：返回商品的详情 -->
@@ -39,5 +39,14 @@
     <select id="selectProductsByCid" resultMap="BaseResultMap" parameterType="com.fresh.bean.Product">
         select * from product where cid = #{category.cid}
   </select>
+
+    <!-- 根据用户主键修改用户的性别和昵称 -->
+    <update id="updateInventoryByPrimaryKey" parameterType="com.fresh.bean.Product">
+    update product
+    set
+      inventory = inventory - #{inventory}
+    where pid = #{pid,jdbcType=INTEGER}
+    </update>
+
 
 </mapper>

@@ -64,5 +64,4 @@ public class SendSms {
         //发送短信，要钱的........谨慎测试
         sendSms("13396053249",  verify);
     }
-
 }

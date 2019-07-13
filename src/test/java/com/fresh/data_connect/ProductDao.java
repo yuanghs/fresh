@@ -70,4 +70,20 @@ public class ProductDao {
 
     }
 
+    /**
+     * 测试 updateInventoryByPrimaryKey()
+     *                     > 成功！
+     */
+    @Test
+    public void test4() {
+
+        Product product = new Product();
+        product.setPid(1);
+        product.setInventory(50);
+
+        int a = productMapper.updateInventoryByPrimaryKey(product);
+
+        System.out.println(a);
+    }
+
 }

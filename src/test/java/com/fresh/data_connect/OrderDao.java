@@ -3,6 +3,7 @@ package com.fresh.data_connect;
 import com.fresh.bean.*;
 import com.fresh.mappers.OrderItemMapper;
 import com.fresh.mappers.OrdersMapper;
+import com.fresh.util.OrderUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +75,10 @@ public class OrderDao {
         Product product4 = new Product();
         product4.setPid(5);
 
+
         // 把订单插入到订单表
         Orders orders = new Orders();
-        orders.setOid(ordersMapper.selectMaxOid() + 1);
+        orders.setOid(OrderUtil.getOrderNumber(new Date()));
         orders.setUser(user);
         orders.setLocation(location);
         orders.setOprice(456.8);

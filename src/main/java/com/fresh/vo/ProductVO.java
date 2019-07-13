@@ -1,7 +1,10 @@
 package com.fresh.vo;
 
 /**
+ * 封装商品信息
+ *
  * @author sdy
+ * @date 2019/7/12
  */
 public class ProductVO {
     private Integer pid;

@@ -21,7 +21,6 @@ public class MailUtil {
     //授权码
     public static String myEmailPassword = "siardbengabtidib";
 
-
     /**
      *
      * @param receiveMailAccount 收件人邮箱
@@ -43,7 +42,6 @@ public class MailUtil {
         sf.setTrustAllHosts(true);
         prop.put("mail.smtp.ssl.enable", "true");
         prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
 
         //根据配置创建会话，用于和邮件服务器交互
         Session session = Session.getDefaultInstance(prop);
@@ -90,6 +88,4 @@ public class MailUtil {
 
         return message;
     }
-
-
 }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Orders {
 
-    private Integer oid;            //主键
+    private String oid;            //主键：日期加随机码
     private Date  order_time;       //下单施加
     private Double oprice;          //订单的总价
     private User user;              //用户引用：主键
@@ -21,7 +21,7 @@ public class Orders {
     // 保存订单详情的list，订单与订单详情的关系为：1——m
     private List<OrderItem> orderItemList;
 
-    public Orders(Integer oid, Date order_time, Double oprice, User user, Location location, List<OrderItem> orderItemList) {
+    public Orders(String oid, Date order_time, Double oprice, User user, Location location, List<OrderItem> orderItemList) {
         this.oid = oid;
         this.order_time = order_time;
         this.oprice = oprice;
@@ -33,11 +33,11 @@ public class Orders {
     public Orders() {
     }
 
-    public Integer getOid() {
+    public String getOid() {
         return oid;
     }
 
-    public void setOid(Integer oid) {
+    public void setOid(String oid) {
         this.oid = oid;
     }
 

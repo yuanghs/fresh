@@ -1,5 +1,11 @@
 package com.fresh.vo;
 
+/**
+ * 封装购物车信息
+ *
+ * @author sdy
+ * @date 2019/7/12
+ */
 public class CartVO {
     private Integer cid;
     private Integer count;

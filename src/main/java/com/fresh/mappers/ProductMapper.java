@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ProductMapper {
     /**
-     * 从数据库中随机查询出6条商品数据
+     * 从数据库中随机查询出10条商品数据
      * @return
      */
     List<Product> selectRandomProducts();
@@ -38,5 +38,11 @@ public interface ProductMapper {
      */
     List<Product> selectProductsByPname(Product product);
 
+    /**
+     * 根据商品主键修改库存
+     * @param product
+     * @return
+     */
+    int updateInventoryByPrimaryKey(Product product);
 
 }

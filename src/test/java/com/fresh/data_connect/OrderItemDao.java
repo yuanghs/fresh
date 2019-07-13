@@ -30,7 +30,7 @@ public class OrderItemDao {
     public void test1(){
 
         Orders orders = new Orders();
-        orders.setOid(3);
+//        orders.setOid(3);
 
         OrderItem orderItem = new OrderItem();
         orderItem.setOrders(orders);
@@ -58,7 +58,7 @@ public class OrderItemDao {
     public void test3(){
 
         Orders orders =  new Orders();
-        orders.setOid(4);
+//        orders.setOid(4);
 
         OrderItem orderItem = new OrderItem();
         orderItem.setOrders(orders);
