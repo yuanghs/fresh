@@ -31,9 +31,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         //得到请求的url
         String url = request.getRequestURI();
         //除了 /login.action /sendVerifyCode.action /mainList.action
-        // /getById.action /sortList.action可以访问，其他的不可以访问
+        // /getById.action /sortList.action /searchList.action 可以访问，其他的不可以访问
         if(url.contains("/login") || url.contains("sendVerifyCode")
-                || url.contains("mainList") || url.contains("getById") || url.contains("sortList")) {
+                || url.contains("mainList") || url.contains("getById")
+                || url.contains("sortList") || url.contains("searchList")) {
             return true;
         }
         // 从header中得到token
