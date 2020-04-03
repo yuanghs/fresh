@@ -24,10 +24,7 @@ public class SendSms {
      * @param verify 指定验证码
      */
     public static void sendSms(String phone, String verify) {
-        //使用个人的阿里云，请勿泄露下行信息
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou",
-                "LTAIuhGjrYIhIw5f", "yboCBgAgjjwSaTx8q3RjwppD0FNKw6");
-        IAcsClient client = new DefaultAcsClient(profile);
+    
 
         CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);
